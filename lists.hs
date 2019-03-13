@@ -30,3 +30,49 @@ sumPairs :: [(Int, Int)] -> [Int]
 
 sumPairs [] = []
 sumPairs ((x,y):xys) = (x + y) : sumPairs xys 
+
+
+
+
+
+
+doubleListIfEven :: [Int] -> [Int]
+doubleListIfEven xs = [2*a|a <- xs, even a]
+
+
+----------------------------Banco de dados----------------------------------------------------------------------
+type Pessoa = String
+type Livro = String
+type BancoDados = [(Pessoa, Livro)]
+
+baseExemplo :: BancoDados
+baseExemplo = [("Sergio","O Senhor dos Aneis"),
+               ("Andre","Duna"),
+               ("Fernando","Jonathan Strange & Mr.Norrell"),
+               ("Fernando","Duna")]
+-- -- Atualizações 
+-- Inserir uma pessoa e livro no banco de dados
+emprestar :: BancoDados -> Pessoa -> Livro -> BancoDados
+emprestar bd ps li = (ps, li):bd
+-- Remover uma pessoa e livro no banco de dados
+devolver :: BancoDados -> Pessoa -> Livro -> BancoDados
+devolver [] _ _ = []
+devolver bd ps lv = [(pessoa, livro)| (pessoa, livro) <- bd, (pessoa, livro) /= (ps, lv)]
+
+-- -- Consultas
+--exibi todos os livros que determinada pessoa pegou
+livros :: BancoDados -> Pessoa -> [Livro]
+livros [] _ = []
+livros bd ps = [livro | (pessoa, livro) <- bd, pessoa == ps]
+--exibi todos as pessoas que pegou determinado livro                      
+emprestimos :: BancoDados -> Livro -> [Pessoa]
+emprestimos [] _ = []
+emprestimos bd lv = [pessoa | (pessoa, livro) <- bd, livro == lv]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- algoritmo QuickSort
+qsort :: [Int] -> [Int]
+qsort [] = []
+qsort (a:as) = qsort[x | x <- as, x <= a] ++ [a] ++ qsort[y| y <- as, y >= a] 
+--[x | x <- as, x <= a] retornará um vetor de elemento x tal que x vem do vetor as e x <=as
